@@ -1,5 +1,6 @@
 <?php
-    require 'models.php';
+    $root = dirname(__FILE__);
+    require $root.'/../models/models.php';
 
     //foreach models
     foreach($models as $model_name => $model) {
@@ -34,14 +35,24 @@
         `updated_at` DATETIME ON UPDATE CURRENT_TIMESTAMP, 
         `trash` tinyint(1) NOT NULL, 
         PRIMARY KEY (`id`) ";
-    }
-
-    $objects_table = 
-    "CREATE TABLE IF NOT EXISTS `$table` (
-        $query_str
-    )";
+        $objects_table = 
+        "CREATE TABLE IF NOT EXISTS `$table` (
+            $query_str
+        )";
 
 
-    if ($mysqli->query($objects_table) === TRUE) {
-        printf("Table $table successfully created.\n");
+        if ($mysqli->query($objects_table) === TRUE) {
+            printf("Table $table successfully created.\n");
+        }
+
+        if($table=='users'){
+            $checkUser = "SELECT * FROM users limit 1";
+            $result = $mysqli->query($checkUser);
+            //check length result
+            if($result->num_rows == 0){
+                //insert seed users
+                $query = "INSERT INTO users (username, password, email) VALUES ('admin', md5('admin'), 'admin@admin.com')";
+                $mysqli->query($query);
+            }
+        }
     }

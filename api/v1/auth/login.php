@@ -1,6 +1,7 @@
 <?php
-    require "../models/db.php";
-    require "../../../config/redirect.php";
+    $root = dirname(__FILE__);
+    require $root.'/../config/db.php';
+    require $root.'/../../../config/redirect.php';
 
     //mysql login with username & password
     $username = $_POST["username"];
@@ -16,7 +17,7 @@
     }
 
     //mysqli check if user exist
-    $query = "SELECT * FROM users WHERE username = '" . $username . "' AND password = '" . md5($password) . "'";
+    $query = "SELECT * FROM users WHERE trash = 0 AND username = '" . $username . "' AND password = '" . md5($password) . "'";
     $result = $mysqli->query($query);
     
     if ($result->num_rows > 0) {

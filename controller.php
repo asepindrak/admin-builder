@@ -23,22 +23,23 @@
               <div class="col-12">
                 <div class="card recent-sales overflow-auto">
 
-                  <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                      <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                      </li>
-
-                      <li><a class="dropdown-item" href="#">Today</a></li>
-                      <li><a class="dropdown-item" href="#">This Month</a></li>
-                      <li><a class="dropdown-item" href="#">This Year</a></li>
-                    </ul>
-                  </div>
-
                   <div class="card-body">
+                  <?php if(isset($tables[$model]["filters"])){ ?>
+                    <form action="<?=$actual_link?>" method="post" class="p-3">
+                        <h6>Filter</h6>
+                        <?php foreach($tables[$model]["filters"] as $row) { ?>
+                          <div class="form-group mt-3">
+                            <input type="text" name="<?=$row?>" class="form-control" placeholder="<?=$row?>..." />
+                          </div>
+                        <?php } ?>
+                      
+                      <div class="mt-3 form-group">
+                          <button class="btn btn-primary">Filter</button>
+                      </div>
+                    </form>
+                  <?php } ?>
 
-                    <table class="table table-borderless datatable">
+                    <table class="table table-borderless datatable mt-3">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -52,7 +53,42 @@
                         <tr>
                           <td><?=$no?></td>
                           <?php foreach($tables[$model]["models"] as $row_model) { ?>
+                            <?php if(isset($tables[$model]["types"])){ ?>
+                              <?php if(isset($tables[$model]["types"][$row_model])){ ?>
+                                <?php if($tables[$model]["types"][$row_model]=='image'){ ?>
+                                  <td scope="col">
+                                    <a href="<?=$row[$row_model]?>" target="_new">
+                                        <img src="<?=$row[$row_model]?>" width="50" height="50" />
+                                    </a>
+                                  </td>
+                                <?php } else { ?>
+                                  <td scope="col"><?=$row[$row_model]?></td>
+                                <?php } ?>
+                              <?php } else { ?>
+                                <td scope="col"><?=$row[$row_model]?></td>
+                              <?php } ?>
+                                
+                            <?php } else { ?>
                             <td scope="col"><?=$row[$row_model]?></td>
+                            <?php } ?>
+                          <?php } ?>
+
+                          <!-- is edit -->
+                          <?php if($tables[$model]["isEdit"]===true){ ?>
+                            <td scope="col">
+                              <button class="btn btn-success">
+                                <i class="bi bi-pencil"></i>
+                              </button>
+                            </td>
+                          <?php } ?>
+
+                          <!-- is trash -->
+                          <?php if($tables[$model]["isTrash"]===true){ ?>
+                            <td scope="col">
+                              <button class="btn btn-danger">
+                                <i class="bi bi-trash"></i>
+                              </button>
+                            </td>
                           <?php } ?>
                         </tr>
                         <?php $no++; } ?>
