@@ -5,3 +5,4 @@
     $models = array();
     require 'users.php';
     require 'articles.php';
+    require 'product_categories.php';

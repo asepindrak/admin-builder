@@ -63,7 +63,6 @@
             }
             
             //loop $data
-            $no_data = 0;
             foreach($data as $key => $value) {
                 //skip if model/route
                 if($key=='model'||$key=='route'){
@@ -73,17 +72,18 @@
                 if(empty($value)) {
                     continue;
                 }
-                if($no_data==0){
-                    $data_query .= " `$key` = '$value'";
+
+                if($key=='password'){
+                    $data_query .= ", `$key` = md5('$value')";
                 } else{
                     $data_query .= ", `$key` = '$value'";
                 }
-                $no_data++;
+                
+                
             }
 
             
             //loop $images
-            $no = 0;
             foreach($images as $key => $value) {
                 //skip if model/route
                 if($key=='model'||$key=='route'){
@@ -93,19 +93,14 @@
                 if(empty($value)) {
                     continue;
                 }
-                if($no==0 && $no_data == 0){
-                    $data_query .= " `$key` = '$value'";
-                } else{
-                    $data_query .= ", `$key` = '$value'";
-                }
-                $no++;
+                
+                $data_query .= ", `$key` = '$value'";
             }
             echo $data_query;
             //mysqli query insert data
-            $mysqli->query("INSERT INTO `$model` SET $data_query");
+            $mysqli->query("INSERT INTO `$model` SET trash = 0 $data_query");
         } else{
             //loop $data
-            $no = 0;
             foreach($data as $key => $value) {
                 //skip if model/route
                 if($key=='model'||$key=='route'){
@@ -115,17 +110,17 @@
                 if(empty($value)) {
                     continue;
                 }
-                if($no==0){
-                    $data_query .= " `$key` = '$value'";
+
+                if($key=='password'){
+                    $data_query .= ", `$key` = md5('$value')";
                 } else{
                     $data_query .= ", `$key` = '$value'";
                 }
-                $no++;
             }
             
 
             //mysqli query insert data
-            $mysqli->query("INSERT INTO `$model` SET $data_query");
+            $mysqli->query("INSERT INTO `$model` SET trash = 0 $data_query");
 
         }
 
