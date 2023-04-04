@@ -1,6 +1,6 @@
 Admin Dashboard Builder Framework v1
 Description: As simple as you can (no coding needed!)
-Author: Asep Indra K
+Author: Asep Indra K (https://asepindrak.github.io/)
 URL: https://github.com/asepindrak/admin-builder
 
 
