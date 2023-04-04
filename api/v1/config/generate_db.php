@@ -51,7 +51,7 @@
             //check length result
             if($result->num_rows == 0){
                 //insert seed users
-                $query = "INSERT INTO users (username, password, email) VALUES ('admin', md5('admin'), 'admin@admin.com')";
+                $query = "INSERT INTO users (username, password, email, image) VALUES ('admin', md5('admin'), 'admin@admin.com', 'https://xsgames.co/randomusers/avatar.php?g=female')";
                 $mysqli->query($query);
             }
         }

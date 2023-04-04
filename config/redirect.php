@@ -1,5 +1,4 @@
 <?php
-    session_start();
     function redirect($page, $status){
         $_SESSION['status'] = $status;
         require 'config.php';

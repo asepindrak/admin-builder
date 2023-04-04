@@ -1,4 +1,5 @@
 <?php
+    session_start();
     $root = dirname(__FILE__);
     require $root.'/../config/db.php';
     require $root.'/../../../config/redirect.php';
@@ -25,6 +26,9 @@
             "status" => "success",
             "message" => "Login successful",
         );
+        //get single row from result
+        $row = $result->fetch_assoc();
+        setcookie('user', json_encode($row), time() + (86400 * 30), "/"); // 86400 = 1 day
         return redirect("dashboard", $status);
     }
     

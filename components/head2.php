@@ -1,14 +1,37 @@
 <?php
   $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+  require 'config/isLogin.php';
   require 'config/session.php';
   require 'config/pages.php';
-  $PATH = "../";
-  $page = $pages[$_GET['page']];
+  require 'config/config.php';
+  require 'config/check_route.php';
+  $image = $SERVER.'/api/v1/';
+  $params = $_GET['page'];
+  $params = explode( "/", $_GET['page'] );
+
+  $isEdit = false;
+  $isCreate = false;
+  if(count($params) > 1){
+    if($params[1] == 'create'){
+      $isCreate = true;
+    } else if($params[1] == 'edit'){
+      $isEdit = true;
+    }
+  }
+
+  $PATH = "";
+  for ( $i = 0; $i < count($params); $i++ ) {
+    $PATH = $PATH . "../";
+  }
+  $page = $params[0];
+  $page = $pages[$page];
   $title = $page['name'];
+  $route = $page['route'];
   if(isset($page['model'])){
     $model = $page['model'];
     require 'tables/tables.php';
   }
+  
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +88,7 @@
         <i class="bi bi-list toggle-sidebar-btn"></i>
       </div><!-- End Logo -->
 
-      <div class="search-bar">
+      <div class="search-bar hidden">
         <form class="search-form d-flex align-items-center" method="POST" action="#">
           <input type="text" name="query" placeholder="Search" title="Enter search keyword">
           <button type="submit" title="Search"><i class="bi bi-search"></i></button>
@@ -225,14 +248,14 @@
           <li class="nav-item dropdown pe-3">
 
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-              <img src="<?=$PATH?>assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-              <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+              <img src="<?=$user->image?>" alt="Profile" class="rounded-circle">
+              <span class="d-none d-md-block dropdown-toggle ps-2"><?=$user->username?></span>
             </a><!-- End Profile Iamge Icon -->
 
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li class="dropdown-header">
-                <h6>Kevin Anderson</h6>
-                <span>Web Designer</span>
+                <h6><?=$user->username?></h6>
+                <span>User</span>
               </li>
               <li>
                 <hr class="dropdown-divider">

@@ -16,7 +16,7 @@
 
       <section class="section dashboard">
         <div class="row">
-          <?php if(isset($model)){ ?>
+          <?php if(isset($model) && count($params) == 1){ ?>
 
 
               <!-- Recent Sales -->
@@ -24,6 +24,7 @@
                 <div class="card recent-sales overflow-auto">
 
                   <div class="card-body">
+                  <a href="<?=$SERVER?>/page/<?=$route?>/create" class="btn btn-primary mt-3"><i class="bi bi-plus"></i> Data Baru</a>
                   <?php if(isset($tables[$model]["filters"])){ ?>
                     <form action="<?=$actual_link?>" method="post" class="p-3">
                         <h6>Filter</h6>
@@ -34,7 +35,7 @@
                         <?php } ?>
                       
                       <div class="mt-3 form-group">
-                          <button class="btn btn-primary">Filter</button>
+                          <button class="btn btn-primary"><i class="bi bi-filter"></i> Filter</button>
                       </div>
                     </form>
                   <?php } ?>
@@ -57,11 +58,13 @@
                               <?php if(isset($tables[$model]["types"][$row_model])){ ?>
                                 <?php if($tables[$model]["types"][$row_model]=='image'){ ?>
                                   <td scope="col">
-                                    <a href="<?=$row[$row_model]?>" target="_new">
-                                        <img src="<?=$row[$row_model]?>" width="50" height="50" />
+                                    <a href="<?=$image.$row[$row_model]?>" target="_new">
+                                        <img src="<?=$image.$row[$row_model]?>" width="50" height="50" />
                                     </a>
                                   </td>
-                                <?php } else { ?>
+                                <?php } else if($tables[$model]["types"][$row_model]=='password'){ ?>
+                                  <td scope="col">***</td>
+                                <?php } else{ ?>
                                   <td scope="col"><?=$row[$row_model]?></td>
                                 <?php } ?>
                               <?php } else { ?>
@@ -76,18 +79,18 @@
                           <!-- is edit -->
                           <?php if($tables[$model]["isEdit"]===true){ ?>
                             <td scope="col">
-                              <button class="btn btn-success">
+                              <a href="<?=$SERVER?>/page/<?=$route?>/edit" class="btn btn-success">
                                 <i class="bi bi-pencil"></i>
-                              </button>
+                              </a>
                             </td>
                           <?php } ?>
 
                           <!-- is trash -->
                           <?php if($tables[$model]["isTrash"]===true){ ?>
                             <td scope="col">
-                              <button class="btn btn-danger">
+                              <a href="<?=$SERVER?>/api/v1/delete.php?model=<?=$model?>&route=<?=$route?>&id=<?=$row['id']?>" class="btn btn-danger">
                                 <i class="bi bi-trash"></i>
-                              </button>
+                              </a>
                             </td>
                           <?php } ?>
                         </tr>
@@ -103,6 +106,91 @@
 
               
           <?php } ?>
+
+          <!-- Create Data -->
+
+          <?php if($isCreate){ ?>
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+                  <div class="card-body">
+                    <!-- form create -->
+                    <form class="form-horizontal" role="form" action="<?=$SERVER?>/api/v1/create.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="model" class="form-control mt-2" value="<?=$model?>" />
+                        <input type="hidden" name="route" class="form-control mt-2" value="<?=$route?>" />
+                        <?php $no=0; foreach($tables[$model]["models"] as $row_model) { ?>
+                          <?php if(isset($tables[$model]["types"])){ ?>
+                            <?php if(isset($tables[$model]["types"][$row_model])){ ?>
+                              <?php if($tables[$model]["types"][$row_model]=='image'){ ?>
+                                  <div class="form-group mt-3">
+                                    <label><?=$tables[$model]["titles"][$no]?></label>
+                                    <div class="input-group mt-2">
+                                      <span class="input-group-addon">
+                                        <i class="bi bi-picture"></i>
+                                      </span>
+                                      <input type="file" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                                    </div>
+                                  </div>
+                              <?php } else if($tables[$model]["types"][$row_model]=='password'){ ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <input type="password" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                                </div>
+                              <?php } else if($tables[$model]["types"][$row_model]=='email'){ ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <input type="email" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                                </div>
+                              <?php } else { ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                                </div>
+                              <?php } ?>
+                            <?php } else { ?>
+                              <div class="form-group mt-3">
+                                <label><?=$tables[$model]["titles"][$no]?></label>
+                                <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                              </div>
+                            <?php } ?>
+                              
+                          <?php } else { ?>
+                            <div class="form-group mt-3">
+                              <label><?=$tables[$model]["titles"][$no]?></label>
+                              <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                            </div>
+                          <?php } ?>
+                        <?php $no++; } ?>
+
+                        <div class="form-group mt-3 row">
+                          <div class="col">
+                            <a href="<?=$SERVER?>/page/<?=$route?>" class="btn btn-danger"><i class="bi bi-arrow-left"></i> Kembali</a>
+                          </div>
+                          <div class="col">
+                            <button class="btn btn-primary"><i class="bi bi-save"></i> Simpan</button>
+                          </div>
+                        </div>
+
+                    </form>
+                  </div>
+                </div>
+            </div>
+          <?php } ?>
+
+          <!-- End Create Data -->
+
+          <!-- Edit Data -->
+
+          <?php if($isEdit){ ?>
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+                  <div class="card-body">
+                    Edit
+                  </div>
+                </div>
+            </div>
+          <?php } ?>
+
+          <!-- End Edit Data -->
               
 
         </div>
