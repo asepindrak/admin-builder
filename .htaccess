@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteRule ^page/(.*)$ controller.php?page=$1 [L]
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule !.*\.php$ %{REQUEST_FILENAME}.php [QSA,L]
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule !.*\.php$ %{REQUEST_FILENAME}.php [QSA,L]

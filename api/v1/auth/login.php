@@ -1,6 +1,6 @@
 <?php
     require "../models/db.php";
-    require "../../../pages/redirect.php";
+    require "../../../config/redirect.php";
 
     //mysql login with username & password
     $username = $_POST["username"];

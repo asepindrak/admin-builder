@@ -1,5 +1,5 @@
 <?php
-  require 'utils/session.php';
+  require 'config/session.php';
   $PATH = "";
 ?>
 <!DOCTYPE html>
