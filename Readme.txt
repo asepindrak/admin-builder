@@ -10,6 +10,7 @@ Getting Started
     - create new file config/config.php or duplicate from config.sample.php
     - change variable $SERVER to your host
     - create new file api/v1/config/db.php or duplicate from api/v1/config/db.sample.php
+    - create new database
 
 2. Models
     - create new model file at api/v1/models/
