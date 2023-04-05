@@ -8,7 +8,7 @@
 
 ![alt text](https://repository-images.githubusercontent.com/623568846/f06d1708-2e50-49e4-b8ab-8da8ac8dc637)
 
-Getting Started
+## Getting Started
 
 1. Configuration
 
