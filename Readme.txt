@@ -3,6 +3,7 @@ Description: As simple as you can (no coding needed!)
 Author: Asep Indra K (https://asepindrak.github.io/)
 URL: https://github.com/asepindrak/admin-builder
 
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
 
 Getting Started
 
