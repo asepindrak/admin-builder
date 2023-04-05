@@ -79,7 +79,7 @@
                           <!-- is edit -->
                           <?php if($tables[$model]["isEdit"]===true){ ?>
                             <td scope="col">
-                              <a href="<?=$SERVER?>/page/<?=$route?>/edit" class="btn btn-success">
+                              <a href="<?=$SERVER?>/page/<?=$route?>/edit/<?=$row['id']?>" class="btn btn-success">
                                 <i class="bi bi-pencil"></i>
                               </a>
                             </td>
@@ -180,11 +180,68 @@
 
           <!-- Edit Data -->
 
-          <?php if($isEdit){ ?>
+          <?php if($isEdit){ $data = $result->fetch_array(MYSQLI_ASSOC); ?>
             <div class="col-12">
                 <div class="card recent-sales overflow-auto">
                   <div class="card-body">
-                    Edit
+                    <form class="form-horizontal" autocomplete="off" role="form" action="<?=$SERVER?>/api/v1/update.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="model" class="form-control mt-2" value="<?=$model?>" />
+                        <input type="hidden" name="route" class="form-control mt-2" value="<?=$route?>" />
+                        <input type="hidden" name="id" class="form-control mt-2" value="<?=$id?>" />
+                        <?php $no=0; foreach($tables[$model]["models"] as $row_model) { ?>
+                          <?php if(isset($tables[$model]["types"])){ ?>
+                            <?php if(isset($tables[$model]["types"][$row_model])){ ?>
+                              <?php if($tables[$model]["types"][$row_model]=='image'){ ?>
+                                  <div class="form-group mt-3">
+                                    <label><?=$tables[$model]["titles"][$no]?></label>
+                                    <div class="input-group mt-2">
+                                      <span class="input-group-addon">
+                                        <i class="bi bi-picture"></i>
+                                      </span>
+                                      <input type="file" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" />
+                                    </div>
+                                  </div>
+                              <?php } else if($tables[$model]["types"][$row_model]=='password'){ ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <input type="password" name="<?=$row_model?>" autocomplete="off" class="form-control mt-2" id="<?=$row_model?>" />
+                                </div>
+                              <?php } else if($tables[$model]["types"][$row_model]=='email'){ ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <input type="email" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" value="<?=$data[$row_model]?>" required />
+                                </div>
+                              <?php } else { ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" value="<?=$data[$row_model]?>" required />
+                                </div>
+                              <?php } ?>
+                            <?php } else { ?>
+                              <div class="form-group mt-3">
+                                <label><?=$tables[$model]["titles"][$no]?></label>
+                                <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" value="<?=$data[$row_model]?>" required />
+                              </div>
+                            <?php } ?>
+                              
+                          <?php } else { ?>
+                            <div class="form-group mt-3">
+                              <label><?=$tables[$model]["titles"][$no]?></label>
+                              <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" value="<?=$data[$row_model]?>" required />
+                            </div>
+                          <?php } ?>
+                        <?php $no++; } ?>
+
+                        <div class="form-group mt-3 row">
+                          <div class="col">
+                            <a href="<?=$SERVER?>/page/<?=$route?>" class="btn btn-danger"><i class="bi bi-arrow-left"></i> Kembali</a>
+                          </div>
+                          <div class="col">
+                            <button class="btn btn-primary"><i class="bi bi-save"></i> Simpan</button>
+                          </div>
+                        </div>
+
+                    </form>
                   </div>
                 </div>
             </div>

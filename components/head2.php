@@ -11,11 +11,17 @@
 
   $isEdit = false;
   $isCreate = false;
+  $id = "";
   if(count($params) > 1){
     if($params[1] == 'create'){
       $isCreate = true;
     } else if($params[1] == 'edit'){
       $isEdit = true;
+    }
+  }
+  if(count($params) > 2){
+    if($params[1] == 'edit'){
+      $id = $params[2];
     }
   }
 
