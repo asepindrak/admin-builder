@@ -3,7 +3,7 @@ Description: As simple as you can (no coding needed!)
 Author: Asep Indra K (https://asepindrak.github.io/)
 URL: https://github.com/asepindrak/admin-builder
 
-![alt text](https://github.com/asepindrak/admin-builder/blob/master/image.jpg?raw=true)
+![alt text](https://repository-images.githubusercontent.com/623568846/f06d1708-2e50-49e4-b8ab-8da8ac8dc637)
 
 Getting Started
 
