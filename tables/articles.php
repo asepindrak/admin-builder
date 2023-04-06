@@ -9,13 +9,15 @@
             ),
             'slug', 
             'content', 
+            'publish_date',
             'image'
         ),
-        'titles' => array('Title', 'Category', 'Slug', 'Content', 'Image'),
-        'filters' => array('title'),
+        'titles' => array('Title', 'Category', 'Slug', 'Content', 'Publish Date', 'Image'),
+        'filters' => array('title', 'publish_date'),
         'types' => array(
             'image' => 'image',
-            'category_id' => 'select'
+            'category_id' => 'select',
+            'publish_date' => 'date'
         ),
         'isEdit' => true,
         'isTrash' => true,

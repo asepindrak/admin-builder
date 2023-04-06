@@ -27,6 +27,10 @@
 
                 $query_str .= ", `$key` text NULL ";
 
+            } else if($value == "date"){
+
+                $query_str .= ", `$key` date NULL ";
+
             } else if($value == "datetime"){
 
                 $query_str .= ", `$key` datetime NULL ";

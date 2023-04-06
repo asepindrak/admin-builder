@@ -8,5 +8,6 @@
         ),
         'slug' => 'text',
         'content' => 'text',
+        'publish_date' => 'date',
         'image' => 'text'
     );

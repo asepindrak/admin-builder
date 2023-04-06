@@ -173,6 +173,11 @@
                                   <label><?=$tables[$model]["titles"][$no]?></label>
                                   <input type="email" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required />
                                 </div>
+                              <?php } else if($tables[$model]["types"][$model_column]=='date'){ ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <input type="date" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required />
+                                </div>
                               <?php } else if($tables[$model]["types"][$model_column]=='select'){ ?>
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
@@ -277,6 +282,11 @@
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
                                   <input type="email" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" value="<?=$edit_data[$row_model]?>" required />
+                                </div>
+                              <?php } else if($tables[$model]["types"][$model_column]=='date'){ ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <input type="date" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" value="<?=$edit_data[$row_model]?>" required />
                                 </div>
                               <?php } else if($tables[$model]["types"][$model_column]=='select'){ ?>
                                 <div class="form-group mt-3">
