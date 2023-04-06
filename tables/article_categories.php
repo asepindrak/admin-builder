@@ -1,5 +1,5 @@
 <?php
-    $tables['product_categories'] = array(
+    $tables['article_categories'] = array(
         'models' => array('name'),
         'titles' => array('Name'),
         'filters' => array('name'),

@@ -20,10 +20,10 @@
         'isMenu' => true,
         'icon' => 'bi bi-newspaper'
     );
-    $pages["product_categories"] = array(
-        'name' => 'Product Category',
-        'route' => 'product_categories',
-        'model' => 'product_categories',
+    $pages["article_categories"] = array(
+        'name' => 'Article Category',
+        'route' => 'article_categories',
+        'model' => 'article_categories',
         'isMenu' => true,
         'icon' => 'bi bi-box'
     );

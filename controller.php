@@ -50,30 +50,51 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <?php $no = 1; while($row = $result->fetch_array(MYSQLI_ASSOC)){ ?>
+                        <?php if($result) { $no = 1; while($row = $result->fetch_array(MYSQLI_ASSOC)){ ?>
                         <tr>
                           <td><?=$no?></td>
                           <?php foreach($tables[$model]["models"] as $row_model) { ?>
-                            <?php if(isset($tables[$model]["types"])){ ?>
-                              <?php if(isset($tables[$model]["types"][$row_model])){ ?>
-                                <?php if($tables[$model]["types"][$row_model]=='image'){ ?>
-                                  <td scope="col">
-                                    <a href="<?=$image.$row[$row_model]?>" target="_new">
-                                        <img src="<?=$image.$row[$row_model]?>" width="50" height="50" />
-                                    </a>
-                                  </td>
-                                <?php } else if($tables[$model]["types"][$row_model]=='password'){ ?>
-                                  <td scope="col">***</td>
-                                <?php } else{ ?>
-                                  <td scope="col"><?=$row[$row_model]?></td>
-                                <?php } ?>
-                              <?php } else { ?>
-                                <td scope="col"><?=$row[$row_model]?></td>
-                              <?php } ?>
-                                
-                            <?php } else { ?>
-                            <td scope="col"><?=$row[$row_model]?></td>
-                            <?php } ?>
+                            <?php
+                              if(is_array($row_model)) {
+                                ?>
+                                <td scope="col">
+                                  <?php
+                                    $include_model = $row_model['model'];
+                                    $datas = json_decode($row[$include_model]);
+                                    // var_dump($datas)
+                                    $value = $row_model['value'];
+                                    echo $datas[0]->$value;
+                                  ?>
+                                </td>
+                                <?php
+                                continue;
+                              }
+
+                              if(!isset($tables[$model]["types"])){
+                                ?><td scope="col"><?=$row[$row_model]?></td><?php
+                                continue;
+                              }
+
+                              if(isset($tables[$model]["types"])){
+                                if(isset($tables[$model]["types"][$row_model])){
+                                  if($tables[$model]["types"][$row_model]=='image'){
+                                    ?>
+                                      <td scope="col">
+                                        <a href="<?=$image.$row[$row_model]?>" target="_new">
+                                            <img src="<?=$image.$row[$row_model]?>" width="50" height="50" />
+                                        </a>
+                                      </td>
+                                    <?php
+                                  } else if($tables[$model]["types"][$row_model]=='password'){
+                                    ?><td scope="col">***</td><?php
+                                  } else{
+                                    ?><td scope="col"><?=$row[$row_model]?></td><?php
+                                  }
+                                } else{
+                                  ?><td scope="col"><?=$row[$row_model]?></td><?php
+                                }
+                              }
+                            ?>
                           <?php } ?>
 
                           <!-- is edit -->
@@ -94,7 +115,7 @@
                             </td>
                           <?php } ?>
                         </tr>
-                        <?php $no++; } ?>
+                        <?php $no++; } } ?>
                       </tbody>
                     </table>
 
@@ -117,46 +138,68 @@
                     <form class="form-horizontal" role="form" action="<?=$SERVER?>/api/v1/create.php" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="model" class="form-control mt-2" value="<?=$model?>" />
                         <input type="hidden" name="route" class="form-control mt-2" value="<?=$route?>" />
-                        <?php $no=0; foreach($tables[$model]["models"] as $row_model) { ?>
+                        <?php $no=0; foreach($tables[$model]["models"] as $row_model) {
+                            $model_column = $row_model;
+                            $model_data = "";
+                            $model_id = "";
+                            $model_value = "";
+                            if(is_array($row_model)) {
+                              $model_column = array_search ($row_model, $tables[$model]["models"]);
+                              $model_data = $tables[$model]["models"][$model_column]['model'];
+                              $model_id = $tables[$model]["models"][$model_column]['id'];
+                              $model_value = $tables[$model]["models"][$model_column]['value'];
+                              require 'api/v1/data.php';
+                            }
+                        ?>
                           <?php if(isset($tables[$model]["types"])){ ?>
-                            <?php if(isset($tables[$model]["types"][$row_model])){ ?>
-                              <?php if($tables[$model]["types"][$row_model]=='image'){ ?>
+                            <?php if(isset($tables[$model]["types"][$model_column])){ ?>
+                              <?php if($tables[$model]["types"][$model_column]=='image'){ ?>
                                   <div class="form-group mt-3">
                                     <label><?=$tables[$model]["titles"][$no]?></label>
                                     <div class="input-group mt-2">
                                       <span class="input-group-addon">
                                         <i class="bi bi-picture"></i>
                                       </span>
-                                      <input type="file" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                                      <input type="file" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required />
                                     </div>
                                   </div>
-                              <?php } else if($tables[$model]["types"][$row_model]=='password'){ ?>
+                              <?php } else if($tables[$model]["types"][$model_column]=='password'){ ?>
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
-                                  <input type="password" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                                  <input type="password" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required />
                                 </div>
-                              <?php } else if($tables[$model]["types"][$row_model]=='email'){ ?>
+                              <?php } else if($tables[$model]["types"][$model_column]=='email'){ ?>
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
-                                  <input type="email" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                                  <input type="email" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required />
+                                </div>
+                              <?php } else if($tables[$model]["types"][$model_column]=='select'){ ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <select name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required>
+                                    <option value="">-- Select --</option>
+                                    <?php foreach($data as $key => $value){ ?>
+                                      <option value="<?=$value[$model_id]?>"><?=$value[$model_value]?></option>
+                                    <?php } ?>
+                                  </select>
                                 </div>
                               <?php } else { ?>
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
-                                  <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                                  <input type="text" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required />
                                 </div>
                               <?php } ?>
                             <?php } else { ?>
                               <div class="form-group mt-3">
                                 <label><?=$tables[$model]["titles"][$no]?></label>
-                                <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                                <input type="text" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required />
                               </div>
                             <?php } ?>
                               
                           <?php } else { ?>
                             <div class="form-group mt-3">
                               <label><?=$tables[$model]["titles"][$no]?></label>
-                              <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" required />
+                              <input type="text" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required />
                             </div>
                           <?php } ?>
                         <?php $no++; } ?>
@@ -180,54 +223,88 @@
 
           <!-- Edit Data -->
 
-          <?php if($isEdit){ $data = $result->fetch_array(MYSQLI_ASSOC); ?>
+          <?php if($isEdit){ $edit_data = $result->fetch_array(MYSQLI_ASSOC); 
+          ?>
             <div class="col-12">
                 <div class="card recent-sales overflow-auto">
                   <div class="card-body">
+                    <!-- form create -->
                     <form class="form-horizontal" autocomplete="off" role="form" action="<?=$SERVER?>/api/v1/update.php" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="model" class="form-control mt-2" value="<?=$model?>" />
                         <input type="hidden" name="route" class="form-control mt-2" value="<?=$route?>" />
                         <input type="hidden" name="id" class="form-control mt-2" value="<?=$id?>" />
-                        <?php $no=0; foreach($tables[$model]["models"] as $row_model) { ?>
+                        <?php $no=0; foreach($tables[$model]["models"] as $row_model) {
+                            $model_column = $row_model;
+                            $model_data = "";
+                            $model_id = "";
+                            $model_value = "";
+                            if(is_array($row_model)) {
+                              $model_column = array_search ($row_model, $tables[$model]["models"]);
+                              $model_data = $tables[$model]["models"][$model_column]['model'];
+                              $model_id = $tables[$model]["models"][$model_column]['id'];
+                              $model_value = $tables[$model]["models"][$model_column]['value'];
+                              require 'api/v1/data.php';
+                              
+                                            
+                              $include_model = $row_model['model'];
+                              $datas = json_decode($edit_data[$include_model]);
+                              // var_dump($datas)
+                              $value = $row_model['value'];
+                              $edit_id = $row_model['id'];
+
+                            }
+
+                            
+                        ?>
                           <?php if(isset($tables[$model]["types"])){ ?>
-                            <?php if(isset($tables[$model]["types"][$row_model])){ ?>
-                              <?php if($tables[$model]["types"][$row_model]=='image'){ ?>
+                            <?php if(isset($tables[$model]["types"][$model_column])){ ?>
+                              <?php if($tables[$model]["types"][$model_column]=='image'){ ?>
                                   <div class="form-group mt-3">
                                     <label><?=$tables[$model]["titles"][$no]?></label>
                                     <div class="input-group mt-2">
                                       <span class="input-group-addon">
                                         <i class="bi bi-picture"></i>
                                       </span>
-                                      <input type="file" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" />
+                                      <input type="file" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" />
                                     </div>
                                   </div>
-                              <?php } else if($tables[$model]["types"][$row_model]=='password'){ ?>
+                              <?php } else if($tables[$model]["types"][$model_column]=='password'){ ?>
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
-                                  <input type="password" name="<?=$row_model?>" autocomplete="off" class="form-control mt-2" id="<?=$row_model?>" />
+                                  <input type="password" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" />
                                 </div>
-                              <?php } else if($tables[$model]["types"][$row_model]=='email'){ ?>
+                              <?php } else if($tables[$model]["types"][$model_column]=='email'){ ?>
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
-                                  <input type="email" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" value="<?=$data[$row_model]?>" required />
+                                  <input type="email" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" value="<?=$edit_data[$row_model]?>" required />
+                                </div>
+                              <?php } else if($tables[$model]["types"][$model_column]=='select'){ ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <select name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" value="<?=$datas[0]->$edit_id?>" required>
+                                    <option value="">-- Select --</option>
+                                    <?php foreach($data as $key => $value){ ?>
+                                      <option value="<?=$value[$model_id]?>" <?php if($datas[0]->$edit_id == $value[$model_id]){ echo "selected"; }?>><?=$value[$model_value]?></option>
+                                    <?php } ?>
+                                  </select>
                                 </div>
                               <?php } else { ?>
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
-                                  <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" value="<?=$data[$row_model]?>" required />
+                                  <input type="text" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" value="<?=$edit_data[$row_model]?>" required />
                                 </div>
                               <?php } ?>
                             <?php } else { ?>
                               <div class="form-group mt-3">
                                 <label><?=$tables[$model]["titles"][$no]?></label>
-                                <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" value="<?=$data[$row_model]?>" required />
+                                <input type="text" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" value="<?=$edit_data[$row_model]?>" required />
                               </div>
                             <?php } ?>
                               
                           <?php } else { ?>
                             <div class="form-group mt-3">
                               <label><?=$tables[$model]["titles"][$no]?></label>
-                              <input type="text" name="<?=$row_model?>" class="form-control mt-2" id="<?=$row_model?>" value="<?=$data[$row_model]?>" required />
+                              <input type="text" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" value="<?=$edit_data[$row_model]?>" required />
                             </div>
                           <?php } ?>
                         <?php $no++; } ?>

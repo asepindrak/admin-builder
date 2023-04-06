@@ -4,7 +4,7 @@
 
     //foreach models
     foreach($models as $model_name => $model) {
-        
+        $query_foreign = array();
         var_dump($model);
         $table = $model_name;
         //get key of $model
@@ -14,11 +14,25 @@
         foreach($keys as $key) {
 
             $value = $model[$key];
-            if($value == "text"){
+            if(is_array($value)){
+                $foreign_model = $value['model'];
+                $type = $value['type'];
+                $isNull = $value['isNull'] ? 'NULL': '';
+                $query_str .= ", `$key` $type UNSIGNED $isNull ";
+                $fk_name = "fk_".$foreign_model;
+                //push query for add associations
+                $query_foreign[$foreign_model] = "ALTER TABLE `$table` ADD FOREIGN KEY (`$key`) REFERENCES $foreign_model(id) ON DELETE CASCADE";
+            
+            } else if($value == "text"){
+
                 $query_str .= ", `$key` text NULL ";
+
             } else if($value == "datetime"){
+
                 $query_str .= ", `$key` datetime NULL ";
+
             } else{
+
                 //explode value
                 $value_array = explode(" ", $value);
                 //get key 0 as type, key 1 as length
@@ -26,6 +40,7 @@
                 $length = $value_array[1];
 
                 $query_str .= ", `$key` $type($length) NULL ";
+
             }
 
         }
@@ -35,15 +50,24 @@
         `updated_at` DATETIME ON UPDATE CURRENT_TIMESTAMP, 
         `trash` tinyint(1) NOT NULL, 
         PRIMARY KEY (`id`) ";
+
         $objects_table = 
         "CREATE TABLE IF NOT EXISTS `$table` (
             $query_str
-        )";
+        ) ENGINE=INNODB";
 
 
         if ($mysqli->query($objects_table) === TRUE) {
             printf("Table $table successfully created.\n");
+            foreach($query_foreign as $foreign => $query_list) {
+                if ($mysqli->query($query_list) === TRUE) {
+                    printf("Foreign $foreign successfully created.\n");
+                }
+            }
         }
+
+        
+        
 
         if($table=='users'){
             $checkUser = "SELECT * FROM users limit 1";
@@ -51,7 +75,7 @@
             //check length result
             if($result->num_rows == 0){
                 //insert seed users
-                $query = "INSERT INTO users (username, password, email, image) VALUES ('admin', md5('admin'), 'admin@admin.com', 'https://xsgames.co/randomusers/avatar.php?g=female')";
+                $query = "INSERT INTO users (username, password, email, image) VALUES ('admin', md5('admin'), 'admin@admin.com', 'uploads/profile.jpg')";
                 $mysqli->query($query);
             }
         }

@@ -3,4 +3,4 @@
     $tables = array();
     require 'users.php';
     require 'articles.php';
-    require 'product_categories.php';
+    require 'article_categories.php';

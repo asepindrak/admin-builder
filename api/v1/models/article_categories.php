@@ -1,4 +1,4 @@
 <?php
-    $models['product_categories'] = array(
+    $models['article_categories'] = array(
         'name' => 'varchar 50 null',
     );
