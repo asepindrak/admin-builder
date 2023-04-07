@@ -52,7 +52,7 @@
         $query_str .= ", 
         `created_at`     DATETIME DEFAULT CURRENT_TIMESTAMP,
         `updated_at` DATETIME ON UPDATE CURRENT_TIMESTAMP, 
-        `trash` tinyint(1) NOT NULL, 
+        `trash` tinyint(1) DEFAULT 0, 
         PRIMARY KEY (`id`) ";
 
         $objects_table = 
