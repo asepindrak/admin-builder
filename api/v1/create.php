@@ -96,7 +96,6 @@
                 
                 $data_query .= ", `$key` = '$value'";
             }
-            echo $data_query;
             //mysqli query insert data
             $mysqli->query("INSERT INTO `$model` SET trash = 0 $data_query");
         } else{

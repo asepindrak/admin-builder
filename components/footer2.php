@@ -2,7 +2,12 @@
   <?php
     require 'config/config.php';
   ?>
-    
+  
+    <!-- loading block -->
+    <div id="loading" class="hidden">
+        <span class="loading"></span>
+    </div>
+
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
       <div class="copyright">
@@ -31,10 +36,18 @@
 
     <!-- Template Main JS File -->
     <script src="<?=$PATH?>assets/js/main.js"></script>
+
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('#select').select2();
-    });
+      $(document).ready(function() {
+          $('#select').select2();
+      });
+    </script>
+
+    <script>
+        $('form').submit(function(){
+          $('button').prop("disabled", true);
+           $("#loading").removeClass("hidden");
+        });
     </script>
   </body>
 

@@ -97,8 +97,7 @@
                 
                 $data_query .= ", `$key` = '$value'";
             }
-            echo $data_query;
-            //mysqli query insert data
+            //mysqli query update data
             $mysqli->query("UPDATE `$model` SET trash = 0 $data_query WHERE id = '$id' ");
         } else{
             //loop $data
@@ -120,7 +119,7 @@
             }
             
 
-            //mysqli query insert data
+            //mysqli query update data
             $mysqli->query("UPDATE `$model` SET trash = 0 $data_query WHERE id = '$id' ");
 
         }

@@ -47,15 +47,15 @@
                                   <div class="form-group mt-3">
                                     <label>Date Range</label>
                                     <div class="input-group mt-3">
-                                      <input type="date" name="date_from_<?=$row[0]?>" class="form-control" placeholder="date_from_<?=$row[0]?>..." />
-                                      <input type="date" name="date_to_<?=$row[0]?>" class="form-control" placeholder="date_to_<?=$row[0]?>..." />
+                                      <input type="date" name="date_from_<?=$row[0]?>" class="form-control" placeholder="date_from_<?=$row[0]?>..." value="<?=$_POST['date_from_'.$row[0]]?>" />
+                                      <input type="date" name="date_to_<?=$row[0]?>" class="form-control" placeholder="date_to_<?=$row[0]?>..." value="<?=$_POST['date_to_'.$row[0]]?>" />
                                     </div>
                                   </div>
                                 <?php
                               } else{
                                 ?>
                                   <div class="form-group mt-3">
-                                    <input type="text" name="<?=$row?>" class="form-control" placeholder="<?=$row?>..." />
+                                    <input type="text" name="<?=$row?>" class="form-control" placeholder="<?=$row?>..." value="<?=$_POST[$row]?>" />
                                   </div>
                                 <?php
                               }
@@ -147,9 +147,38 @@
                           <!-- is trash -->
                           <?php if($tables[$model]["isTrash"]===true){ ?>
                             <td scope="col">
-                              <a href="<?=$SERVER?>/api/v1/delete.php?model=<?=$model?>&route=<?=$route?>&id=<?=$row['id']?>" class="btn btn-danger">
+                              <button data-bs-toggle="modal" data-bs-target="#deleteModal<?=$row['id']?>" class="btn btn-danger">
                                 <i class="bi bi-trash"></i>
-                              </a>
+                              </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="deleteModal<?=$row['id']?>" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title">Delete Item?</h5>
+                                      <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                      ></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      Are you sure you want to delete this item?
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                      >
+                                        Close
+                                      </button>
+                                      <a href="<?=$SERVER?>/api/v1/delete.php?model=<?=$model?>&route=<?=$route?>&id=<?=$row['id']?>" class="btn btn-danger">Yes</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             </td>
                           <?php } ?>
                         </tr>
@@ -308,7 +337,7 @@
                                       <span class="input-group-addon">
                                         <i class="bi bi-picture"></i>
                                       </span>
-                                      <input type="file" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" />
+                                      <input type="file" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required />
                                     </div>
                                   </div>
                               <?php } else if($tables[$model]["types"][$model_column]=='password'){ ?>
