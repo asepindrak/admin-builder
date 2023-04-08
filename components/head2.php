@@ -67,6 +67,9 @@
   <link href="<?=$PATH?>assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="<?=$PATH?>assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="<?=$PATH?>assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
 
   <!-- Template Main CSS File -->
   <link href="<?=$PATH?>assets/css/style.css" rel="stylesheet">

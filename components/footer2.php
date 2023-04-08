@@ -31,7 +31,11 @@
 
     <!-- Template Main JS File -->
     <script src="<?=$PATH?>assets/js/main.js"></script>
-
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#select').select2();
+    });
+    </script>
   </body>
 
   </html>

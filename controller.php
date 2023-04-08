@@ -208,7 +208,7 @@
                               <?php } else if($tables[$model]["types"][$model_column]=='select'){ ?>
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
-                                  <select name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required>
+                                  <select name="<?=$model_column?>" class="form-control mt-2" id="select" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach($data as $key => $value){ ?>
                                       <option value="<?=$value[$model_id]?>"><?=$value[$model_value]?></option>
@@ -318,7 +318,7 @@
                               <?php } else if($tables[$model]["types"][$model_column]=='select'){ ?>
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
-                                  <select name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" value="<?=$datas[0]->$edit_id?>" required>
+                                  <select name="<?=$model_column?>" class="form-control mt-2" id="select" value="<?=$datas[0]->$edit_id?>" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach($data as $key => $value){ ?>
                                       <option value="<?=$value[$model_id]?>" <?php if($datas[0]->$edit_id == $value[$model_id]){ echo "selected"; }?>><?=$value[$model_value]?></option>
