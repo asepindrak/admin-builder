@@ -26,18 +26,20 @@
                   <div class="card-body">
                   <a href="<?=$SERVER?>/page/<?=$route?>/create" class="btn btn-primary mt-3"><i class="bi bi-plus"></i> Data Baru</a>
                   <?php if(isset($tables[$model]["filters"])){ ?>
-                    <form action="<?=$actual_link?>" method="post" class="p-3">
-                        <h6>Filter</h6>
-                        <?php foreach($tables[$model]["filters"] as $row) { ?>
-                          <div class="form-group mt-3">
-                            <input type="text" name="<?=$row?>" class="form-control" placeholder="<?=$row?>..." />
-                          </div>
-                        <?php } ?>
-                      
-                      <div class="mt-3 form-group">
-                          <button class="btn btn-primary"><i class="bi bi-filter"></i> Filter</button>
-                      </div>
-                    </form>
+                    <div class="w-25">
+                      <form action="<?=$actual_link?>" method="post" class="p-3">
+                          <h6>Filter</h6>
+                          <?php foreach($tables[$model]["filters"] as $row) { ?>
+                            <div class="form-group mt-3">
+                              <input type="text" name="<?=$row?>" class="form-control" placeholder="<?=$row?>..." />
+                            </div>
+                          <?php } ?>
+                        
+                        <div class="mt-3 form-group">
+                            <button class="btn btn-primary"><i class="bi bi-filter"></i> Filter</button>
+                        </div>
+                      </form>
+                    </div>
                   <?php } ?>
 
                     <table class="table table-borderless datatable mt-3">
@@ -46,6 +48,15 @@
                           <th scope="col">#</th>
                           <?php foreach($tables[$model]["titles"] as $row) { ?>
                             <th scope="col"><?=$row?></th>
+                          <?php } ?>
+                          <!-- is edit -->
+                          <?php if($tables[$model]["isEdit"]===true){ ?>
+                            <th scope="col">Edit</th>
+                          <?php } ?>
+
+                          <!-- is trash -->
+                          <?php if($tables[$model]["isTrash"]===true){ ?>
+                            <th scope="col">Trash</th>
                           <?php } ?>
                         </tr>
                       </thead>
