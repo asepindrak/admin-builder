@@ -30,9 +30,25 @@
                       <form action="<?=$actual_link?>" method="post" class="p-3">
                           <h6>Filter</h6>
                           <?php foreach($tables[$model]["filters"] as $row) { ?>
-                            <div class="form-group mt-3">
-                              <input type="text" name="<?=$row?>" class="form-control" placeholder="<?=$row?>..." />
-                            </div>
+                            <?php
+                              if(is_array($row)){
+                                ?>
+                                  <div class="form-group mt-3">
+                                    <label>Date Range</label>
+                                    <div class="input-group mt-3">
+                                      <input type="date" name="date_from_<?=$row[0]?>" class="form-control" placeholder="date_from_<?=$row[0]?>..." />
+                                      <input type="date" name="date_to_<?=$row[0]?>" class="form-control" placeholder="date_to_<?=$row[0]?>..." />
+                                    </div>
+                                  </div>
+                                <?php
+                              } else{
+                                ?>
+                                  <div class="form-group mt-3">
+                                    <input type="text" name="<?=$row?>" class="form-control" placeholder="<?=$row?>..." />
+                                  </div>
+                                <?php
+                              }
+                            ?>
                           <?php } ?>
                         
                         <div class="mt-3 form-group">

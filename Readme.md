@@ -1,4 +1,4 @@
-## Admin Dashboard Builder Framework v1
+## Admin Dashboard Builder Framework v1.0.10
 
 > As simple as you can (no coding needed!)
 

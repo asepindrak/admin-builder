@@ -25,11 +25,32 @@
             $filter = $_POST;
             //loop $filter
             foreach($filter as $key => $value) {
+                //if date range
+                if (str_contains($key, 'date_from_')) {
+                    if(empty($value)) {
+                        continue;
+                    }
+                    $date_to = str_replace("date_from_", "date_to_", $key);
+                    if(empty($filter[$date_to])) {
+                        continue;
+                    }
+                    $column = str_replace("date_from_", "", $key);
+                    $to_value = $filter['date_to_'.$column];
+                    $filter_query .= " AND DATE(`$column`) BETWEEN '$value' AND '$to_value'";
+                    continue;
+                }
+                //skip date to
+                if (str_contains($key, 'date_to_')) {
+                    continue;
+                }
                 //if empty, skip
                 if(empty($value)) {
                     continue;
                 }
-                $filter_query .= " AND `$key` LIKE '%$value%'";
+                if (!str_contains($key, 'date_from_') && !str_contains($key, 'date_to_')) {
+                    $filter_query .= " AND `$key` LIKE '%$value%'";
+                }
+                
             }
         }
 
@@ -51,11 +72,5 @@
         }
         //mysqli query get data
         $result = $mysqli->query("SELECT $select FROM `$model` WHERE trash = 0 $filter_query");
-        // echo '<br>';
-        // echo '<br>';
-        // echo '<br>';
-        // echo '<br>';    
-        // echo "SELECT $select FROM `$model` WHERE trash = 0 $filter_query";
-        // var_dump($result);
     }
     

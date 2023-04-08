@@ -13,7 +13,10 @@
             'image'
         ),
         'titles' => array('Title', 'Category', 'Slug', 'Content', 'Publish Date', 'Image'),
-        'filters' => array('title', 'publish_date'),
+        'filters' => array(
+            'title', 
+            'date_range' => array('publish_date')
+        ),
         'types' => array(
             'image' => 'image',
             'category_id' => 'select',
