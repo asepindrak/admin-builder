@@ -10,6 +10,9 @@ URL: https://github.com/asepindrak/admin-builder
 
 ## Getting Started
 
+- Supported database: Mysql (Install WAMP for windows or LAMP STACK on Linux)
+- XAMPP is not supported because it uses MariaDB which doesn't have JSON_ARRAYAGG & JSON_OBJECT functions
+
 1. Configuration
 
    - create new file config/config.php or duplicate from config.sample.php
