@@ -1,2 +1,2 @@
 <?php
-    $SERVER = "http://localhost/admin-builder";
+    $SERVER = "http://localhost/admin-builder"; //change to your host

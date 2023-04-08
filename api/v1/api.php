@@ -19,6 +19,9 @@
             }
         }
         $result = $mysqli->query("SELECT $select FROM `$model` WHERE trash = 0 AND id = '$id' limit 1");
+    } else if(is_array($model)){
+        
+        
     } else{
         $filter_query = "";
         if(isset($_POST)){

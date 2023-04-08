@@ -35,6 +35,10 @@
   $route = $page['route'];
   if(isset($page['model'])){
     $model = $page['model'];
+    $isDashboard = false;
+    require 'tables/tables.php';
+  } else if($route=="dashboard"){
+    $isDashboard = true;
     require 'tables/tables.php';
   }
   

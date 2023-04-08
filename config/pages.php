@@ -4,7 +4,7 @@
         'name' => 'Dashboard',
         'route' => 'dashboard',
         'isMenu' => true,
-        'icon' => 'bi bi-grid'
+        'icon' => 'bi bi-grid',
     );
     $pages["users"] = array(
         'name' => 'User',
@@ -13,6 +13,12 @@
         'isMenu' => true,
         'icon' => 'bi bi-people'
     );
+
+
+
+
+    //add pages here
+
     $pages["articles"] = array(
         'name' => 'Article',
         'route' => 'articles',
