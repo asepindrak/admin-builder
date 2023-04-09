@@ -59,11 +59,11 @@ $models['articles'] = array(
       'type' => 'int(11)', // type int with length 11
       'isNull' => true // set NULL
    ),
-   'slug' => 'text', //tyoe text
-   'content' => 'text', //tyoe text
-   'keyword' => 'text', //tyoe text
-   'publish_date' => 'date', //tyoe date
-   'image' => 'text' //tyoe text
+   'slug' => 'text', //type text
+   'content' => 'text', //type text
+   'keyword' => 'text', //type text
+   'publish_date' => 'date', //type date
+   'image' => 'text' //type text
 );
 
 ```
