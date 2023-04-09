@@ -43,9 +43,57 @@ URL: https://github.com/asepindrak/admin-builder
 6. Login
    - default access (username: admin, password: admin)
 
+##Example
+
+> Model
+
+### model articles
+
+```
+$models['articles'] = array(
+   'title' => 'text', //type text
+   'category_id' => array( // foreign key for table article_categories id
+      'model' => 'article_categories', //table article_categories
+      'type' => 'int(11)', // type int with length 11
+      'isNull' => true // set NULL
+   ),
+   'slug' => 'text', //tyoe text
+   'content' => 'text', //tyoe text
+   'keyword' => 'text', //tyoe text
+   'publish_date' => 'date', //tyoe date
+   'image' => 'text' //tyoe text
+);
+
+```
+
+### model article_categories
+
+```
+$models['article_categories'] = array(
+   'name' => 'varchar 50 null', // type varchar, length 50, default value null
+);
+```
+
+### model users
+
+```
+$models['users'] = array(
+   'username' => 'varchar 50 null', // type varchar, length 50, default value null
+   'email' => 'varchar 60 null', // type varchar, length 60, default value null
+   'password' => 'varchar 100 null', // type varchar, length 100, default value null
+   'image' => 'text', // type text
+   'name' => 'varchar 50 null', // type varchar, length 50, default value null
+   'phone' => 'varchar 15 null', // type varchar, length 15, default value null
+);
+```
+
 Template Admin By
 
 Template Name: NiceAdmin
 Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
 Author: BootstrapMade.com
 License: https://bootstrapmade.com/license/
+
+```
+
+```
