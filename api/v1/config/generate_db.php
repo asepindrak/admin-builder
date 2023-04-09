@@ -86,4 +86,59 @@
                 $mysqli->query($query);
             }
         }
+
+
+
+
+        //Alter table add column
+        $query_foreign_alter = array();
+        foreach($keys as $key) {
+            $value = $model[$key];
+            if(is_array($value)){
+                $foreign_model = $value['model'];
+                $type = $value['type'];
+                $isNull = $value['isNull'] ? 'NULL': '';
+                $query_str = " `$key` $type UNSIGNED $isNull ";
+                $fk_name = "fk_".$foreign_model;
+                //push query for add associations
+                $query_foreign_alter[$key] = "ALTER TABLE `$table` ADD FOREIGN KEY (`$key`) REFERENCES $foreign_model(id) ON DELETE CASCADE";
+            
+            } else if($value == "text"){
+
+                $query_str = " `$key` text NULL ";
+
+            } else if($value == "date"){
+
+                $query_str = " `$key` date NULL ";
+
+            } else if($value == "datetime"){
+
+                $query_str = " `$key` datetime NULL ";
+
+            } else{
+
+                //explode value
+                $value_array = explode(" ", $value);
+                //get key 0 as type, key 1 as length
+                $type = $value_array[0];
+                $length = $value_array[1];
+
+                $query_str = " `$key` $type($length) NULL ";
+
+            }
+            $check_column = $mysqli->query("SHOW COLUMNS FROM `$table` LIKE '$key'");
+            $exists = ($check_column->num_rows > 0)?TRUE:FALSE;
+            if(!$exists){
+                $alter_query = "ALTER TABLE `$table` ADD COLUMN $query_str AFTER id";
+                if ($mysqli->query($alter_query) === TRUE) {
+                    echo "alter table `$table` column $key'";
+                    if(isset($query_foreign_alter[$key])){
+                        $mysqli->query($query_foreign_alter[$key]);
+                    }
+                }
+            }
+            
+
+        }
+        
     }
