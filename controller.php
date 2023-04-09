@@ -272,6 +272,16 @@
                                   <label><?=$tables[$model]["titles"][$no]?></label>
                                   <input type="date" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" required />
                                 </div>
+                              <?php } else if(is_array($tables[$model]["types"][$model_column])){ ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <select name="<?=$model_column?>" class="form-control mt-2" id="select" required>
+                                    <option value="">-- Select --</option>
+                                    <?php foreach($data as $key => $value){ ?>
+                                      <option value="<?=$value[$model_id]?>"><?=$value[$model_value]?></option>
+                                    <?php } ?>
+                                  </select>
+                                </div>
                               <?php } else if($tables[$model]["types"][$model_column]=='select'){ ?>
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
