@@ -4,12 +4,12 @@
   ?>
   
     <!-- loading block -->
-    <div id="loading" class="hidden">
+    <div id="loading">
         <span class="loading"></span>
     </div>
 
     <!-- ======= Footer ======= -->
-    <footer id="footer" class="footer">
+    <footer id="footer">
       <div class="copyright">
         &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
       </div>
@@ -44,10 +44,14 @@
     </script>
 
     <script>
-        $('form').submit(function(){
-          $('button').prop("disabled", true);
-           $("#loading").removeClass("hidden");
-        });
+      $(document).ready(function() {
+          $("#loading").removeClass("hidden").addClass("hidden");
+      });
+
+      $('form').submit(function(){
+        $('button').prop("disabled", true);
+          $("#loading").removeClass("hidden");
+      });
     </script>
   </body>
 

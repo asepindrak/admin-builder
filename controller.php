@@ -17,7 +17,7 @@
       <section class="section dashboard">
         <div class="row">
           <?php if($route=="dashboard"){ ?>
-            <div class="card p-5">
+            <div class="card pt-4">
               <div class="card-body">
                 <?php foreach($dashboard_data as $key => $value){ ?>
                   <button type="button" class="btn btn-primary mb-2">
