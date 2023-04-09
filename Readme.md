@@ -6,17 +6,31 @@ Author: Asep Indra K (https://asepindrak.github.io/)
 
 URL: https://github.com/asepindrak/admin-builder
 
+> ---
+
 ![alt text](https://raw.githubusercontent.com/asepindrak/admin-builder/master/assets/img/ss0.png)
+
+> ---
 
 ![alt text](https://raw.githubusercontent.com/asepindrak/admin-builder/master/assets/img/ss1.png)
 
+> ---
+
 ![alt text](https://raw.githubusercontent.com/asepindrak/admin-builder/master/assets/img/ss2.png)
+
+> ---
 
 ![alt text](https://raw.githubusercontent.com/asepindrak/admin-builder/master/assets/img/ss3.png)
 
+> ---
+
 ![alt text](https://raw.githubusercontent.com/asepindrak/admin-builder/master/assets/img/ss4.png)
 
+> ---
+
 ![alt text](https://raw.githubusercontent.com/asepindrak/admin-builder/master/assets/img/ss5.png)
+
+> ---
 
 ## Getting Started
 
