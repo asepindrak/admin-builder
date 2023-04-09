@@ -1,5 +1,6 @@
 <?php
   require 'config/session.php';
+  require 'config/checkLogin.php';
   $PATH = "";
 ?>
 <!DOCTYPE html>
