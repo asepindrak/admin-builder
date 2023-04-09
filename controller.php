@@ -35,7 +35,11 @@
                 <div class="card recent-sales overflow-auto">
 
                   <div class="card-body">
-                  <a href="<?=$SERVER?>/page/<?=$route?>/create" class="btn btn-primary mt-3"><i class="bi bi-plus"></i> Data Baru</a>
+                    <div class="row">
+                        <div class="col-md-12 d-flex flex-column align-items-end">
+                          <a href="<?=$SERVER?>/page/<?=$route?>/create" class="btn btn-primary mt-3"><i class="bi bi-plus"></i> New Data</a>
+                        </div>
+                    </div>
                   <?php if(isset($tables[$model]["filters"])){ ?>
                     <div class="w-25">
                       <form action="<?=$actual_link?>" method="post" class="p-3">
@@ -87,11 +91,12 @@
                               }
                             ?>
                           <?php $no++; } ?>
-                        
-                        <div class="mt-3 form-group">
-                            <button type="reset" class="btn btn-secondary" onClick="resetForm('<?=$actual_link?>')"><i class="bi bi-arrow-clockwise"></i> Reset</button>
-                            <button class="btn btn-primary"><i class="bi bi-filter"></i> Filter</button>
-                        </div>
+                          <div class="d-flex flex-column align-items-end">
+                            <div class="mt-3 form-group">
+                                <button type="reset" class="btn btn-secondary" onClick="resetForm('<?=$actual_link?>')"><i class="bi bi-arrow-clockwise"></i> Reset</button>
+                                <button class="btn btn-primary"><i class="bi bi-filter"></i> Filter</button>
+                            </div>
+                          </div>
                       </form>
                     </div>
                   <?php } ?>
@@ -315,10 +320,10 @@
 
                         <div class="form-group mt-3 row">
                           <div class="col">
-                            <a href="<?=$SERVER?>/page/<?=$route?>" class="btn btn-danger"><i class="bi bi-arrow-left"></i> Kembali</a>
+                            <a href="<?=$SERVER?>/page/<?=$route?>" class="btn btn-danger"><i class="bi bi-arrow-left"></i> Back</a>
                           </div>
-                          <div class="col">
-                            <button class="btn btn-primary"><i class="bi bi-save"></i> Simpan</button>
+                          <div class="col d-flex flex-column align-items-end">
+                            <button class="btn btn-primary"><i class="bi bi-save"></i> Save</button>
                           </div>
                         </div>
 
@@ -435,10 +440,10 @@
 
                         <div class="form-group mt-3 row">
                           <div class="col">
-                            <a href="<?=$SERVER?>/page/<?=$route?>" class="btn btn-danger"><i class="bi bi-arrow-left"></i> Kembali</a>
+                            <a href="<?=$SERVER?>/page/<?=$route?>" class="btn btn-danger"><i class="bi bi-arrow-left"></i> Back</a>
                           </div>
-                          <div class="col">
-                            <button class="btn btn-primary"><i class="bi bi-save"></i> Simpan</button>
+                          <div class="col d-flex flex-column align-items-end">
+                            <button class="btn btn-primary"><i class="bi bi-save"></i> Save</button>
                           </div>
                         </div>
 
