@@ -43,6 +43,8 @@ URL: https://github.com/asepindrak/admin-builder
 6. Login
    - default access (username: admin, password: admin)
 
+> ---
+
 ## Example
 
 > ## Model
@@ -87,10 +89,14 @@ $models['users'] = array(
 );
 ```
 
+> ---
+
 ### Migration
 
 1. Access this url http://localhost/admin-builder/api/v1/config/generate_db.php after creating models
 2. You can add new column to model and access http://localhost/admin-builder/api/v1/config/generate_db.php to alter the table
+
+> ---
 
 > ## Pages
 
@@ -103,6 +109,8 @@ $pages["articles"] = array(
    'icon' => 'bi bi-newspaper' // bootstrap icon https://icons.getbootstrap.com/
 );
 ```
+
+> ---
 
 > ## Tables
 
