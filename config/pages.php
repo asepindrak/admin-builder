@@ -33,3 +33,13 @@
         'isMenu' => true,
         'icon' => 'bi bi-box'
     );
+
+
+    //add custom pages here
+    $pages["article_by_category"] = array(
+        'type' => 'custom',
+        'name' => 'Article by Category',
+        'route' => 'article-by-category',
+        'isMenu' => true,
+        'icon' => 'bi bi-box2'
+    );
