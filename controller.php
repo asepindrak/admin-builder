@@ -40,29 +40,56 @@
                     <div class="w-25">
                       <form action="<?=$actual_link?>" method="post" class="p-3">
                           <h6>Filter</h6>
-                          <?php foreach($tables[$model]["filters"] as $row) { ?>
+                          <?php $no = 0; foreach($tables[$model]["filters"] as $row) { ?>
                             <?php
                               if(is_array($row)){
                                 ?>
                                   <div class="form-group mt-3">
-                                    <label>Date Range</label>
+                                    <label>Date Range <?=inputTitle($row[0])?></label>
                                     <div class="input-group mt-3">
-                                      <input type="date" name="date_from_<?=$row[0]?>" class="form-control" placeholder="date_from_<?=$row[0]?>..." value="<?=$_POST['date_from_'.$row[0]]?>" />
+                                      <input type="date" name="date_from_<?=$row[0]?>" class="form-control" placeholder="<?=inputTitle('date_from_'.$row[0].'...')?>" value="<?=$_POST['date_from_'.$row[0]]?>" />
                                       <input type="date" name="date_to_<?=$row[0]?>" class="form-control" placeholder="date_to_<?=$row[0]?>..." value="<?=$_POST['date_to_'.$row[0]]?>" />
                                     </div>
                                   </div>
                                 <?php
                               } else{
-                                ?>
-                                  <div class="form-group mt-3">
-                                    <input type="text" name="<?=$row?>" class="form-control" placeholder="<?=$row?>..." value="<?=$_POST[$row]?>" />
-                                  </div>
-                                <?php
+                                if(isset($tables[$model]["types"][$row])){
+                                  if(is_array($tables[$model]["types"][$row])){
+                                    $model_select_data = $tables[$model]["types"][$row][0];
+                                    $model_select_id = $tables[$model]["models"][$row]['id'];
+                                    $model_select_value = $tables[$model]["models"][$row]['value'];
+                                    require 'api/v1/select.php'; 
+                                    ?>
+                                    <div class="form-group mt-3">
+                                      <label><?=$tables[$model]["titles"][$no]?></label>
+                                      <select name="<?=$row?>" class="form-control mt-2" id="select" value="<?=$_POST[$row]?>">
+                                        <option value="">-- Select --</option>
+                                        <?php foreach($select_data as $key => $value){ ?>
+                                          <option value="<?=$value[$model_select_id]?>" <?php if($_POST[$row] == $value[$model_select_id]){ echo "selected"; }?>><?=$value[$model_select_value]?></option>
+                                        <?php } ?>
+                                      </select>
+                                    </div>
+                                    <?php
+                                  } else{
+                                    ?>
+                                      <div class="form-group mt-3">
+                                        <input type="text" name="<?=$row?>" class="form-control" placeholder="<?=inputTitle($row)?>..." value="<?=$_POST[$row]?>" />
+                                      </div>
+                                    <?php
+                                  }
+                                } else{
+                                  ?>
+                                    <div class="form-group mt-3">
+                                      <input type="text" name="<?=$row?>" class="form-control" placeholder="<?=inputTitle($row)?>..." value="<?=$_POST[$row]?>" />
+                                    </div>
+                                  <?php
+                                }
                               }
                             ?>
-                          <?php } ?>
+                          <?php $no++; } ?>
                         
                         <div class="mt-3 form-group">
+                            <button type="reset" class="btn btn-secondary" onClick="resetForm('<?=$actual_link?>')"><i class="bi bi-arrow-clockwise"></i> Reset</button>
                             <button class="btn btn-primary"><i class="bi bi-filter"></i> Filter</button>
                         </div>
                       </form>
@@ -356,6 +383,16 @@
                                   <input type="date" name="<?=$model_column?>" class="form-control mt-2" id="<?=$model_column?>" value="<?=$edit_data[$row_model]?>" required />
                                 </div>
                               <?php } else if($tables[$model]["types"][$model_column]=='select'){ ?>
+                                <div class="form-group mt-3">
+                                  <label><?=$tables[$model]["titles"][$no]?></label>
+                                  <select name="<?=$model_column?>" class="form-control mt-2" id="select" value="<?=$datas[0]->$edit_id?>" required>
+                                    <option value="">-- Select --</option>
+                                    <?php foreach($data as $key => $value){ ?>
+                                      <option value="<?=$value[$model_id]?>" <?php if($datas[0]->$edit_id == $value[$model_id]){ echo "selected"; }?>><?=$value[$model_value]?></option>
+                                    <?php } ?>
+                                  </select>
+                                </div>
+                              <?php } else if(is_array($tables[$model]["types"][$model_column])){ ?>
                                 <div class="form-group mt-3">
                                   <label><?=$tables[$model]["titles"][$no]?></label>
                                   <select name="<?=$model_column?>" class="form-control mt-2" id="select" value="<?=$datas[0]->$edit_id?>" required>

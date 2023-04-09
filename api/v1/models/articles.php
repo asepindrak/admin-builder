@@ -8,6 +8,7 @@
         ),
         'slug' => 'text',
         'content' => 'text',
+        'keyword' => 'text',
         'publish_date' => 'date',
         'image' => 'text'
     );

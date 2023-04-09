@@ -2,6 +2,7 @@
   $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
   require 'config/isLogin.php';
   require 'config/session.php';
+  require 'config/utils.php';
   require 'config/pages.php';
   require 'config/config.php';
   require 'config/check_route.php';

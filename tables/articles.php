@@ -9,17 +9,20 @@
             ),
             'slug', 
             'content', 
+            'keyword', 
             'publish_date',
             'image'
         ),
-        'titles' => array('Title', 'Category', 'Slug', 'Content', 'Publish Date', 'Image'),
+        'titles' => array('Title', 'Category', 'Slug', 'Content', 'Keyword', 'Publish Date', 'Image'),
         'filters' => array(
             'title', 
+            'category_id', 
+            'keyword', 
             'date_range' => array('publish_date')
         ),
         'types' => array(
             'image' => 'image',
-            'category_id' => 'select',
+            'category_id' => array('article_categories'),
             'publish_date' => 'date'
         ),
         'isEdit' => true,

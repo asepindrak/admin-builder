@@ -46,9 +46,15 @@
       });
 
       $('form').submit(function(){
-        $('button').prop("disabled", true);
+          $('button').prop("disabled", true);
           $("#loading").removeClass("hidden");
       });
+
+      function resetForm(url) {
+          $('button').prop("disabled", true);
+          $("#loading").removeClass("hidden");
+          document.location.href=url;
+      }
     </script>
 
   </body>
