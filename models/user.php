@@ -1,6 +1,6 @@
 <?php
     require_once("../lib/model.php");
-    class Users {
+    class UserModel {
         public $model;
         public $data;
 
@@ -17,17 +17,17 @@
                 'name' => 'column',
                 'phone' => 'column',
             );
-            // $data->set_column($column);
+            $this->data->set_column($column);
             $result = $this->data->get();
             return $result;
         }
 
         
-        function set(){
+        function set($data){
             $column = array(
-                'username' => 'alpha',
-                'name' => 'Alpha',
-                'phone' => '12345',
+                'username' => $data['username'],
+                'name' => $data['name'],
+                'phone' => $data['phone'],
             );
             $this->data->set_column($column);
             $result = $this->data->set();
@@ -35,33 +35,30 @@
         }
 
         
-        function update(){
+        function update($data, $id){
             $column = array(
-                'username' => 'beta',
-                'name' => 'Beta',
-                'phone' => '54321',
+                'username' => $data['username'],
+                'name' => $data['name'],
+                'phone' => $data['phone'],
             );
-            $this->data->set_id("3");
+            $this->data->set_id($id);
             $this->data->set_column($column);
             $result = $this->data->update();
             return $result;
         }
 
         
-        function delete(){
-            $this->data->set_id("3");
+        function delete($id){
+            $this->data->set_id($id);
             $result = $this->data->delete();
             return $result;
         }
 
         
-        function restore(){
-            $this->data->set_id("3");
+        function restore($id){
+            $this->data->set_id($id);
             $result = $this->data->restore();
             return $result;
         }
 
     }
-
-    $user = new Users();
-    print_r($user->restore());
