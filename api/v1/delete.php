@@ -3,6 +3,9 @@
     require 'models/models.php';
     require $root.'/../../../config/redirect.php';
     
+    $root = dirname(__FILE__);
+    require $root.'/../../config/isLogin.php';
+    
     
     if(isset($_GET)){
         $model = $_GET['model'];

@@ -1,5 +1,8 @@
 <?php
     require 'api/v1/models/models.php';
+    
+    $root = dirname(__FILE__);
+    require $root.'/../../config/isLogin.php';
 
     $dashboard_data = array();
     foreach($tables as $key => $value){

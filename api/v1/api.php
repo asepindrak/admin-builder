@@ -1,6 +1,9 @@
 <?php
     require 'api/v1/models/models.php';
     
+    $root = dirname(__FILE__);
+    require $root.'/../../config/isLogin.php';
+
     if($id!=""){
         $fields = $models[$model];
         $select = "$model.id, $model.created_at, $model.updated_at, $model.trash" ;

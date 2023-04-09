@@ -1,0 +1,21 @@
+{
+    "name": "adens/admin-builder",
+    "description": "As simple as you can (no coding needed!)",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Adens\\AdminBuilder\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "adens",
+            "email": "asepindrakurniawan@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5",
+        "firebase/php-jwt": "^6.4"
+    }
+}
