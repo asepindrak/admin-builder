@@ -28,10 +28,6 @@ URL: https://github.com/asepindrak/admin-builder
 
 > ---
 
-![alt text](https://raw.githubusercontent.com/asepindrak/admin-builder/master/assets/img/ss5.png)
-
-> ---
-
 ## Getting Started
 
 - Supported web server: Apache2
